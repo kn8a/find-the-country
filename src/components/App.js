@@ -3,7 +3,9 @@ import Play from "./Play";
 import Scores from "./Scores";
 import Footer from "./Footer";
 import NavigationBar from "./Navigation";
+import Map from "./Map";
 import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/app.css'
 
 import { initializeApp } from "firebase/app";
 import {

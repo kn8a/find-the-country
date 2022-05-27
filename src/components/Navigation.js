@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 function NavigationBar() {
     return (
-        <Navbar bg="light" expand="lg" variant="light">
+        <Navbar bg="dark" expand="lg" variant="dark">
             <LinkContainer to="/instructions">
               <Navbar.Brand>Match-D-Flag</Navbar.Brand>
             </LinkContainer>
