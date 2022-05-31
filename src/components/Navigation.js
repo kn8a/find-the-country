@@ -9,9 +9,9 @@ function NavigationBar() {
             <LinkContainer to="/instructions">
               <Navbar.Brand>Match-D-Flag</Navbar.Brand>
             </LinkContainer>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
 
                 <LinkContainer to="/instructions">
                     <Nav.Link>Instructions</Nav.Link>
@@ -24,7 +24,19 @@ function NavigationBar() {
                 </LinkContainer>
 
                 </Nav>
+                <Nav>
+                
+                <p>flag</p>
+                <p>flag</p>
+                <p>flag</p>
+                <p>flag</p>
+                <p>flag</p>
+                <p>flag</p>
+                <p>flag</p>
+            
+                </Nav>
             </Navbar.Collapse>
+
         </Navbar>
 );
 }

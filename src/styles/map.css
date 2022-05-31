@@ -1,4 +1,8 @@
 
-path:hover{
+path.st0:hover{
+    fill: darkgoldenrod
+}
+
+path.st0:active{
     fill: darkgoldenrod
 }

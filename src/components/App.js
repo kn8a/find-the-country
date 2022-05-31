@@ -13,7 +13,7 @@ import {
   addDoc, doc, 
   query, where,
   orderBy, serverTimestamp,
-  getDoc, updateDoc,
+  getDoc, updateDoc, DocumentSnapshot,
 } from 'firebase/firestore'
 import {
   hashString, 
@@ -21,6 +21,7 @@ import {
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Alert, Navbar, Button, NavbarBrand } from "react-bootstrap";
+import { async } from "@firebase/util";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,7 +34,33 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+const db = getFirestore()
+const gameDataRef = collection(db, 'data'); //no use for this collection but will need for SCORES
+
+//levels refs
+const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID)
+
+
+
 function App() {
+
+  const [gameLevels, setGameLevels] = useState({})
+
+  useEffect(() => {
+    getDoc(levelsRef)
+    .then((doc) => {
+    setGameLevels(doc.data())
+  })
+  .catch((err) => {
+    alert(err.message)
+  })
+  }, [])
+
+  useEffect(() => {
+    console.log(gameLevels);
+  },[gameLevels])
+  
+
   return (
     <div className="App">
       
@@ -42,9 +69,9 @@ function App() {
       <NavigationBar/>
         <Routes>
           <Route index element={<Instructions />} />
-          <Route path="" element={<Instructions />} />
+          <Route path="/" element={<Instructions />} />
           <Route path="/instructions/" element={<Instructions />} />
-          <Route path="/play/" exact element={<Play/>}/>
+          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels}/>}/>
           <Route path="/scores/" exact element={<Scores/>}/>
         </Routes>
         <Footer/>
