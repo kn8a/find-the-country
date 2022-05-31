@@ -5,17 +5,10 @@ import ReactCountryFlag from "react-country-flag"
 import { hover } from '@testing-library/user-event/dist/hover';
 import '../styles/flags.css'
 
-
-
 function FlagSelector(props) {
 
   
     //console.log(props.country)
-
-  
-    
-  
-
     return (
       <Modal
         {...props}
@@ -34,29 +27,22 @@ function FlagSelector(props) {
           <div className='flags'>
               {props.flags.map((flag) => {
                   return(
-                    
                       <button 
                         id={flag + 'btn'}
                         onClick={()=>{props.flagclick(flag + '-btn',props.country[0])}}
                       >
-                      <ReactCountryFlag 
-                    countryCode={flag}
-                    svg
-                    style={{
-                      fontSize: '5em',
-                      
-                      
-                    }}
-                    />
+                        <ReactCountryFlag 
+                        countryCode={flag}
+                        svg
+                        style={{
+                          fontSize: '5em',
+                        }}
+                        />
                       </button>
-
-              )
-              
-          })}
+                  ) 
+              })}
           </div>
-
         </Modal.Body>
-        
       </Modal>
     );
   }

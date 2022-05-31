@@ -8,13 +8,12 @@ const Map = (props) => {
 
     return (
         <svg
-    id="Layer_1"
-    x={0}
-    y={0}
-    viewBox="0 0 1009.7 666"
-    xmlSpace="preserve"
-    
-  >
+          id="Layer_1"
+          x={0}
+          y={0}
+          viewBox="0 0 1009.7 666"
+          xmlSpace="preserve"
+        >
     <style>
       {".st0{fill:#a8a8a8;stroke:#fff;stroke-width:.5;stroke-miterlimit:10}"}
     </style>

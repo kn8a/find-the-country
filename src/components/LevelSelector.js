@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import {Modal, Button, Form} from 'react-bootstrap'
 
-
 function LevelSelector(props) {
 
-  
-  
   const [radioState,setRadioState] = useState('')
   const handleRadioChange = (e) => {
     setRadioState(e.target.value)
@@ -30,10 +27,8 @@ function LevelSelector(props) {
           <p>
             Each level has 7 flags that need to be matched with their respective country.
           </p>
-          <Form>
-              
+          <Form>  
               <div className="mb-3" onChange={handleRadioChange}>
-              
               <Form.Check 
                   type='radio'
                   name='level-Radio'
@@ -47,7 +42,6 @@ function LevelSelector(props) {
                   value='med'
                   id='radioMed'
                   label='Med - Less popular countries that most players should recognize.'
-                  
                 />
                 <Form.Check 
                   type='radio'
@@ -56,18 +50,12 @@ function LevelSelector(props) {
                   id='radioHard'
                   label='Hard - Not so popular countries that may be harder to recognize.'
                 />
-              
-                
-                
               </div>
-            
           </Form>
-
         </Modal.Body>
         <Modal.Footer>
         <p style={{color:'darkred', fontWeight:'bold'}}>{props.error}</p>
           <Button onClick={()=>props.onGo(radioState)}>Go!</Button>
-          
         </Modal.Footer>
       </Modal>
     );
