@@ -35,7 +35,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const db = getFirestore()
-const gameDataRef = collection(db, 'data'); //no use for this collection but will need for SCORES
+const scoresRef = collection(db, 'scores'); //no use for this collection but will need for SCORES
 
 //levels refs
 const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID)
@@ -71,8 +71,8 @@ function App() {
           <Route index element={<Instructions />} />
           <Route path="/" element={<Instructions />} />
           <Route path="/instructions/" element={<Instructions />} />
-          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} sols={gameLevels.sols}/>}/>
-          <Route path="/scores/" exact element={<Scores/>}/>
+          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} sols={gameLevels.sols}/>} db={db} scoresRef={scoresRef}/>
+          <Route path="/scores/" exact element={<Scores scoresRef={scoresRef}/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>

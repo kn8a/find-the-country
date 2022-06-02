@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 import Map from "./Map"
+import { initializeApp } from "firebase/app";
 import {
     getFirestore, collection, onSnapshot,
     addDoc, deleteDoc, doc, 
     query, where,
     orderBy, serverTimestamp,
-    getDoc, updateDoc, Timestamp,
+    getDoc, updateDoc, Timestamp
 } from 'firebase/firestore'
 import Modal from 'react-bootstrap/Modal'
 import LevelSelector from "./LevelSelector"
@@ -15,10 +16,30 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { hashString } from 'react-hash-string'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 
+  
 
 const Play = (props) => {
+
+  let navigate = useNavigate();
+  let location = useLocation();
+  let params = useParams();
+  // const firebaseConfig = {
+  //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  //   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  //   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  //   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  //   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  //   appId: process.env.REACT_APP_FIREBASE_APP_ID
+  // };
+  
+  // initializeApp(firebaseConfig);
 
     //? welcome and level selector modal
     const [modalShow, setModalShow] = useState(true);
@@ -53,30 +74,16 @@ const Play = (props) => {
     }
     //? Notification Toast **
 
-    //console.log(props.allLevels)
-
     const [matched, setMatched] = useState(0);
     const [matchedArr, setMatchedArr] = useState([]);
     const [remaining, setRemaining] = useState([]);
     const [selError, setSelError] = useState(0)
     const [currentLevel, setCurrentLevel] = useState('')
-     
     const solutions = props.sols
- 
-    // RU           US          BR          AR          CN          CA          JP
-    // 687309205, -154234357, 204603375, -1538206991, -1602600987, -255246965, -512822949
-    //
-    // DE           UA          IN          MX          ES          SE          TR
-    // 742610833, 1050568551, 264326617, -1069264283, 2025570859, 1114962547, 1510418891
-    //
-    // SA           IS          MN          MG          CU          CO          AO
-    // 1859915115, 406877731, -1354366511, 1023042307, 314957491, -715097305, 94249259
-    //
     const [startTime, setStartTime] = useState({})
     const [timeToComplete, setTimetoComplete] = useState({})
     
     // *start game after level selection
-
     const onGo = (level) => {
         if (!level) {
             setLevelSelectError('To Continue, please select a level')
@@ -137,6 +144,23 @@ const Play = (props) => {
         setTimetoComplete(diffToDisplay);
         setShowGameWon(true)
     }
+
+    function submitScore (level, time, errors) {
+      const db = getFirestore()
+      const scoreRef = collection(db, 'scores')
+      const name = document.getElementById('nameInput')
+      addDoc(scoreRef, {
+        level: level,
+        time: time,
+        errors: errors,
+        name: name.value
+      })
+      .then(()=> {
+        name.value = ''
+        setShowGameWon(false)
+        navigate("/scores");
+      })
+    }
     
     return (
         
@@ -165,6 +189,7 @@ const Play = (props) => {
                 userErrors={selError}
                 show={showGameWon}
                 onHide={() => setShowGameWon(false)}
+                onClick={submitScore}
                 
             />
             
