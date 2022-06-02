@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/find-the-country/static/css/main.efad2915.css",
+    "main.js": "/find-the-country/static/js/main.57675d14.js",
+    "index.html": "/find-the-country/index.html",
+    "main.efad2915.css.map": "/find-the-country/static/css/main.efad2915.css.map",
+    "main.57675d14.js.map": "/find-the-country/static/js/main.57675d14.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.efad2915.css",
+    "static/js/main.57675d14.js"
+  ]
+}
