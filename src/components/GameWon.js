@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {Modal, Button, Form} from 'react-bootstrap'
 
 function GameWon(props) {
@@ -22,7 +21,6 @@ function GameWon(props) {
             You made {props.userErrors} errors, and your time of completion is {props.time}.
           </p>
           <p>
-               
           </p>
           <Form>  
               <div className="mb-3">
@@ -32,7 +30,6 @@ function GameWon(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-        <p style={{color:'darkred', fontWeight:'bold'}}>{props.error}</p>
           <Button id='submitScoreBtn' onClick={()=>{props.onClick(props.wonLevel, props.time, props.userErrors)}}>Submit score</Button>
         </Modal.Footer>
       </Modal>

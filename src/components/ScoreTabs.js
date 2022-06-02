@@ -5,7 +5,6 @@ import Table from 'react-bootstrap/Table'
 
 function ScoreTabs(props) {
   const [key, setKey] = useState('all');
-  console.log('these are scores',props.scores)
 
   return (
     <Tabs

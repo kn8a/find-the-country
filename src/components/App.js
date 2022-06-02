@@ -3,25 +3,12 @@ import Play from "./Play";
 import Scores from "./Scores";
 import Footer from "./Footer";
 import NavigationBar from "./Navigation";
-import Map from "./Map";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/app.css'
-
 import { initializeApp } from "firebase/app";
-import {
-  getFirestore, collection, onSnapshot, Firestore,
-  addDoc, doc, firebase,
-  query, where, Timestamp,
-  orderBy, serverTimestamp,
-  getDoc, updateDoc, DocumentSnapshot,
-} from 'firebase/firestore'
-import {
-  hashString, 
-} from 'react-hash-string'
+import { getFirestore, collection, onSnapshot, doc, query, orderBy, getDoc } from 'firebase/firestore'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Alert, Navbar, Button, NavbarBrand } from "react-bootstrap";
-import { async } from "@firebase/util";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,31 +20,25 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
-
 const db = getFirestore()
-const scoreRef = collection(db, 'scores'); //no use for this collection but will need for SCORES
-
-//levels refs
-const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID)
-
-
+const scoreRef = collection(db, 'scores'); //scores ref
+const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID) //levels ref
 
 function App() {
-
   const [gameLevels, setGameLevels] = useState({})
   const [scoresState, setScoresState] = useState([])
   const scoresQ = query(scoreRef, orderBy('time'))
-  useEffect(()=> {
+  
+  useEffect(()=> { //get and update scores
       onSnapshot(scoresQ, (snapshot) => {  
           let scores=[]
           snapshot.docs.forEach((doc) => {
               scores.push({...doc.data(), id: doc.id})
               setScoresState(scores)
-              console.log(scoresState, scores)
             })})
     },[])
 
-  useEffect(() => {
+  useEffect(() => { //get game levels
     getDoc(levelsRef)
     .then((doc) => {
     setGameLevels(doc.data())
@@ -66,21 +47,15 @@ function App() {
     alert(err.message)
   })
   }, [])
-
-  useEffect(() => {
-    console.log(gameLevels);
-  },[gameLevels])
   
-  const [flagsRemaining, setFlagsRemaining] = useState([])
+  const [flagsRemaining, setFlagsRemaining] = useState([]) //for use with Nav flag display
 
-  const flagsToNav = (remaining) => {
+  const flagsToNav = (remaining) => { //flags from game to Nav
     setFlagsRemaining(remaining)
   }
 
   return (
     <div className="App">
-      
-
       <BrowserRouter>
       <NavigationBar flags={flagsRemaining}/>
         <Routes>
@@ -92,7 +67,6 @@ function App() {
         </Routes>
         <Footer/>
       </BrowserRouter>
-
     </div>
   );
 }

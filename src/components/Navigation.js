@@ -1,16 +1,14 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, Form, FormControl, Button, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactCountryFlag from "react-country-flag"
 import '../styles/nav.css'
-
 
 function NavigationBar(props) {
 
     function hideFlags() {
         document.getElementById('remaining-nav-flags').style.display = 'none'
     }
-
 
     return (
         <Navbar bg="dark" expand="lg" variant="dark" >
@@ -35,24 +33,24 @@ function NavigationBar(props) {
                 <LinkContainer to="/scores">
                     <Nav.Link>Scores</Nav.Link>
                 </LinkContainer>
-      </Nav>
-      <div className='menu-flags-div' id='remaining-nav-flags'>
-          <div>Find: </div>
-            {props.flags.map((flag) => {
-                  return(
-                        <ReactCountryFlag
-                        key={'GDE'+flag+'SPTU'} 
-                        countryCode={flag}
-                        svg
-                        style={{
-                          fontSize: '3em',
-                        }}
-                        />
-                  ) 
-              })}
-      </div>
-    </Navbar.Collapse>
-  </Container>
+            </Nav>
+            <div className='menu-flags-div' id='remaining-nav-flags'>
+                <div>Find: </div>
+                  {props.flags.map((flag) => {
+                        return(
+                              <ReactCountryFlag
+                              key={'GDE'+flag+'SPTU'} 
+                              countryCode={flag}
+                              svg
+                              style={{
+                                fontSize: '3em',
+                              }}
+                              />
+                        ) 
+                    })}
+            </div>
+            </Navbar.Collapse>
+            </Container>
         </Navbar>
 );
 }

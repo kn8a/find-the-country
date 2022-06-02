@@ -1,46 +1,17 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Map from "./Map"
-import { initializeApp } from "firebase/app";
-import {
-    getFirestore, collection, onSnapshot,
-    addDoc, deleteDoc, doc, 
-    query, where,
-    orderBy, serverTimestamp,
-    getDoc, updateDoc, Timestamp
-} from 'firebase/firestore'
-import Modal from 'react-bootstrap/Modal'
+import { getFirestore, collection, addDoc, Timestamp} from 'firebase/firestore'
 import LevelSelector from "./LevelSelector"
 import FlagSelector from "./FlagSelector"
 import GameWon from "./GameWon"
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { hashString } from 'react-hash-string'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  useParams,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
-
-
-  
+import { useNavigate } from "react-router-dom";
 
 const Play = (props) => {
-  console.log(props)
 
-  let navigate = useNavigate();
-  let location = useLocation();
-  let params = useParams();
-  // const firebaseConfig = {
-  //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  //   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  //   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  //   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  //   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-  //   appId: process.env.REACT_APP_FIREBASE_APP_ID
-  // };
-  
-  // initializeApp(firebaseConfig);
+    let navigate = useNavigate();
 
     //? welcome and level selector modal
     const [modalShow, setModalShow] = useState(true);
@@ -52,7 +23,7 @@ const Play = (props) => {
 
     //? game won modal
     const [showGameWon, setShowGameWon] = useState(false)
-
+    const [submitMessage, setSubmitMessage] = useState('')
     
     //? Notification Toast *
     const CorrectAlert = ({ closeToast, toastProps }) => (
@@ -99,7 +70,6 @@ const Play = (props) => {
             document.getElementById('remaining-nav-flags').style.display = 'flex'
         }
     }
-
     
     //? country click opens flag selector
     const handleCountryClick = (country) => {
@@ -140,14 +110,14 @@ const Play = (props) => {
             setSelError(selError + 1)
         }
     }   
-
     
-    const gameWon = () => { //^ TODO
+    const gameWon = () => { //* triggered when game is won
         const fTime = Timestamp.now()
         const timeDiff = fTime.seconds-startTime.seconds
         const diffToDisplay = new Date(timeDiff * 1000).toISOString().substring(14, 19)
         setTimetoComplete(diffToDisplay);
         setShowGameWon(true)
+        document.getElementById('remaining-nav-flags').style.display = 'none'
     }
 
     function submitScore (level, time, errors) {
@@ -187,7 +157,6 @@ const Play = (props) => {
                 onHide={() => setModalShow(false)}
                 error={levelSelectError}
             />
-
             <GameWon
                 time={timeToComplete}
                 wonLevel={currentLevel}
@@ -197,7 +166,6 @@ const Play = (props) => {
                 onClick={submitScore}
                 
             />
-            
             <FlagSelector 
                 flagclick={playRound}
                 show={showFlagSelector}

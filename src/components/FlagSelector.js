@@ -1,14 +1,9 @@
-import { useState } from 'react';
-import {Modal, Button, Form} from 'react-bootstrap'
-
+import { Modal } from 'react-bootstrap'
 import ReactCountryFlag from "react-country-flag"
-import { hover } from '@testing-library/user-event/dist/hover';
 import '../styles/flags.css'
 
 function FlagSelector(props) {
 
-  
-    //console.log(props.country)
     return (
       <Modal
         {...props}
@@ -16,7 +11,6 @@ function FlagSelector(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         backdrop="static"
-        
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">

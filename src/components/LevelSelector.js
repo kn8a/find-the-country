@@ -6,7 +6,6 @@ function LevelSelector(props) {
   const [radioState,setRadioState] = useState('')
   const handleRadioChange = (e) => {
     setRadioState(e.target.value)
-    console.log(e.target.value)
   } //Handling radio level selector
 
     return (
@@ -25,7 +24,7 @@ function LevelSelector(props) {
         <Modal.Body>
           <h4>Please select level to play</h4>
           <p>
-            Each level has 7 flags that need to be matched with their respective country.
+            Each level has 7 flags that need to be matched with their respective country. The game is timed, counter will start when you click 'Go'
           </p>
           <Form>  
               <div className="mb-3" onChange={handleRadioChange}>
@@ -34,21 +33,21 @@ function LevelSelector(props) {
                   name='level-Radio'
                   value='easy'
                   id='radioEasy'
-                  label='Easy - Popular countries that should be easy to find.'
+                  label='Easy - Popular flags that should be easy to find.'
                 />
                 <Form.Check 
                   type='radio'
                   name='level-Radio'
                   value='med'
                   id='radioMed'
-                  label='Med - Less popular countries that most players should recognize.'
+                  label='Med - Less popular flags that most players should find.'
                 />
                 <Form.Check 
                   type='radio'
                   name='level-Radio'
                   value='hard'
                   id='radioHard'
-                  label='Hard - Not so popular countries that may be harder to recognize.'
+                  label='Hard - Not so popular flags that may be harder to find.'
                 />
               </div>
           </Form>
