@@ -1,0 +1,8 @@
+.menu-flags-div {
+    display: flex;
+    align-items: center;
+    color: aliceblue;
+    gap: 0.5rem;
+    display: none;
+    font-weight: bold;
+}

@@ -35,7 +35,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const db = getFirestore()
-const scoresRef = collection(db, 'scores'); //no use for this collection but will need for SCORES
+const scoreRef = collection(db, 'scores'); //no use for this collection but will need for SCORES
 
 //levels refs
 const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID)
@@ -45,6 +45,17 @@ const levelsRef = doc(db, 'data', process.env.REACT_APP_LEVELS_ID)
 function App() {
 
   const [gameLevels, setGameLevels] = useState({})
+  const [scoresState, setScoresState] = useState([])
+  const scoresQ = query(scoreRef, orderBy('time'))
+  useEffect(()=> {
+      onSnapshot(scoresQ, (snapshot) => {  
+          let scores=[]
+          snapshot.docs.forEach((doc) => {
+              scores.push({...doc.data(), id: doc.id})
+              setScoresState(scores)
+              console.log(scoresState, scores)
+            })})
+    },[])
 
   useEffect(() => {
     getDoc(levelsRef)
@@ -60,19 +71,24 @@ function App() {
     console.log(gameLevels);
   },[gameLevels])
   
+  const [flagsRemaining, setFlagsRemaining] = useState([])
+
+  const flagsToNav = (remaining) => {
+    setFlagsRemaining(remaining)
+  }
 
   return (
     <div className="App">
       
 
       <BrowserRouter>
-      <NavigationBar/>
+      <NavigationBar flags={flagsRemaining}/>
         <Routes>
           <Route index element={<Instructions />} />
           <Route path="/" element={<Instructions />} />
           <Route path="/instructions/" element={<Instructions />} />
-          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} sols={gameLevels.sols}/>} db={db} scoresRef={scoresRef}/>
-          <Route path="/scores/" exact element={<Scores scoresRef={scoresRef}/>}/>
+          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} flagsToNav={flagsToNav} sols={gameLevels.sols}/>} />
+          <Route path="/scores/" exact element={<Scores scores={scoresState}/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>

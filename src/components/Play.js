@@ -26,6 +26,7 @@ import {
   
 
 const Play = (props) => {
+  console.log(props)
 
   let navigate = useNavigate();
   let location = useLocation();
@@ -94,8 +95,11 @@ const Play = (props) => {
             setModalShow(false)
             setRemaining(props.allLevels[level])
             setCurrentLevel(level)
+            props.flagsToNav(props.allLevels[level])
+            document.getElementById('remaining-nav-flags').style.display = 'flex'
         }
     }
+
     
     //? country click opens flag selector
     const handleCountryClick = (country) => {
@@ -123,6 +127,7 @@ const Play = (props) => {
             setShowFlagSelector(false)
             const newRemaining = remaining.filter((item)=>item !== country)
             setRemaining(newRemaining)
+            props.flagsToNav(newRemaining)
             setMatchedArr([...matchedArr,country])
             notifyCorrect();
               if (matched === 6){ // * When all found   
@@ -166,7 +171,7 @@ const Play = (props) => {
         
         <div>
             <ToastContainer
-          position="top-right"
+          position="top-center"
           autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
