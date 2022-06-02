@@ -56,12 +56,13 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/find-the-country">
       <NavigationBar flags={flagsRemaining}/>
         <Routes>
           <Route index element={<Instructions />} />
           <Route path="/" element={<Instructions />} />
           <Route path="/instructions/" element={<Instructions />} />
+          <Route path="/find-the-country/" element={<Instructions />} />
           <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} flagsToNav={flagsToNav} sols={gameLevels.sols}/>} />
           <Route path="/scores/" exact element={<Scores scores={scoresState}/>}/>
         </Routes>

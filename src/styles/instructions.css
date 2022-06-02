@@ -1,0 +1,14 @@
+
+
+.instructions {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    background-color: rgba(255, 255, 255, 0.267);
+    
+}
+
+.demoimg {
+    object-fit: scale-down;
+    height:400px;
+    width:800px;
+}
