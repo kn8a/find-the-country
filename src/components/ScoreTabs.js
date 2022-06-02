@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
+import Table from 'react-bootstrap/Table'
 
-function ScoreTabs() {
+function ScoreTabs(props) {
   const [key, setKey] = useState('easy');
+  console.log('these are scores',props.scores)
 
   return (
     <Tabs
@@ -13,13 +15,95 @@ function ScoreTabs() {
       className="mb-3"
     >
       <Tab eventKey="easy" title="Easy">
-        tab 1
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            
+            <th>Name</th>
+            <th>Time</th>
+            <th>Errors</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody>
+        {props.scores.map((score) => {
+
+            if (score.level == 'easy'){
+              return( 
+                <tr>
+                  
+                  <td>{score.name}</td>
+                  <td>{score.time}</td>
+                  <td>{score.errors}</td>
+                  <td>{score.level}</td>
+                </tr>
+              )
+            }
+          })}
+          
+        </tbody>
+      </Table>
       </Tab>
       <Tab eventKey="med" title="Medium">
-        tab 2
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            
+            <th>Name</th>
+            <th>Time</th>
+            <th>Errors</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody>
+        {props.scores.map((score) => {
+
+            if (score.level == 'med'){
+              return( 
+                <tr>
+                  
+                  <td>{score.name}</td>
+                  <td>{score.time}</td>
+                  <td>{score.errors}</td>
+                  <td>{score.level}</td>
+                </tr>
+              )
+            }
+          })}
+          
+        </tbody>
+      </Table>
+        
       </Tab>
       <Tab eventKey="hard" title="Hard">
-        tab 3
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            
+            <th>Name</th>
+            <th>Time</th>
+            <th>Errors</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody>
+        {props.scores.map((score) => {
+
+            if (score.level == 'hard'){
+              return( 
+                <tr>
+                  
+                  <td>{score.name}</td>
+                  <td>{score.time}</td>
+                  <td>{score.errors}</td>
+                  <td>{score.level}</td>
+                </tr>
+              )
+            }
+          })}
+          
+        </tbody>
+      </Table>
       </Tab>
     </Tabs>
   );
