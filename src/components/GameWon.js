@@ -27,13 +27,13 @@ function GameWon(props) {
           <Form>  
               <div className="mb-3">
                 <Form.Label>Your name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your name" required/>
+                <Form.Control type="text" id='nameInput' placeholder="Enter your name" required/>
               </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
         <p style={{color:'darkred', fontWeight:'bold'}}>{props.error}</p>
-          <Button>Submit score</Button>
+          <Button id='submitScoreBtn' onClick={()=>{props.onClick(props.wonLevel, props.time, props.userErrors)}}>Submit score</Button>
         </Modal.Footer>
       </Modal>
     );
