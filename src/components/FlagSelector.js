@@ -28,6 +28,7 @@ function FlagSelector(props) {
               {props.flags.map((flag) => {
                   return(
                       <button 
+                        key={'F5S'+flag+'C8U'}
                         id={flag + 'btn'}
                         onClick={()=>{props.flagclick(flag + '-btn',props.country[0])}}
                       >

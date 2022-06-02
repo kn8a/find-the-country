@@ -5,11 +5,12 @@ import {
     addDoc, deleteDoc, doc, 
     query, where,
     orderBy, serverTimestamp,
-    getDoc, updateDoc,
+    getDoc, updateDoc, Timestamp,
 } from 'firebase/firestore'
 import Modal from 'react-bootstrap/Modal'
 import LevelSelector from "./LevelSelector"
 import FlagSelector from "./FlagSelector"
+import GameWon from "./GameWon"
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { hashString } from 'react-hash-string'
 import { ToastContainer, toast } from "react-toastify";
@@ -19,15 +20,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Play = (props) => {
 
-    // welcome and level selector
+    //? welcome and level selector modal
     const [modalShow, setModalShow] = useState(true);
     const [levelSelectError, setLevelSelectError] = useState('')
 
-    //flag selector
+    //? flag selector modal
     const [showFlagSelector, setShowFlagSelector] = useState(false)
     const [clickedCountry, setClickedCountry] = useState(['',''])
+
+    //? game won modal
+    const [showGameWon, setShowGameWon] = useState(false)
+
     
-    //Notification Toast *
+    //? Notification Toast *
     const CorrectAlert = ({ closeToast, toastProps }) => (
         <div className="add-to-cart-alert">
           <div>Correct! Well Done!</div>
@@ -46,22 +51,17 @@ const Play = (props) => {
     function notifyIncorrect() {
         toast.error(<IncorrectAlert />);
     }
-    //Notification Toast **
+    //? Notification Toast **
 
     //console.log(props.allLevels)
 
     const [matched, setMatched] = useState(0);
+    const [matchedArr, setMatchedArr] = useState([]);
     const [remaining, setRemaining] = useState([]);
     const [selError, setSelError] = useState(0)
-    const [currentLevel, setCurrentLevel] = ('')
-    
-    
-    
-    const solutions = [
-        687309205, -154234357, 204603375, -1538206991, -1602600987, -255246965, -512822949,
-        742610833, 1050568551, 264326617, -1069264283, 2025570859, 1114962547, 1510418891,
-        1859915115, 406877731, -1354366511, 1023042307, 314957491, -715097305, 94249259
-    ]
+    const [currentLevel, setCurrentLevel] = useState('')
+     
+    const solutions = props.sols
  
     // RU           US          BR          AR          CN          CA          JP
     // 687309205, -154234357, 204603375, -1538206991, -1602600987, -255246965, -512822949
@@ -72,93 +72,72 @@ const Play = (props) => {
     // SA           IS          MN          MG          CU          CO          AO
     // 1859915115, 406877731, -1354366511, 1023042307, 314957491, -715097305, 94249259
     //
-    //stopwatch states
-    //! figure out stopwatch - time lapsed
-    const [time, setTime] = useState(0);
-    const [running, setRunning] = useState(false);
+    const [startTime, setStartTime] = useState({})
+    const [timeToComplete, setTimetoComplete] = useState({})
     
-    function Stopwatch(){
-        useEffect(() => {
-          let interval;
-          if (running) {
-            interval = setInterval(() => {
-              setTime((prevTime) => prevTime + 10);
-            }, 10);
-          } else if (!running) {
-            clearInterval(interval);
-          }
-          return () => clearInterval(interval);
-        }, [running]);
-        return (
-          <div className="stopwatch">
-            <div className="numbers">
-              <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
-              <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
-              <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
-            </div>
-            <div className="buttons">
-              <button onClick={() => setRunning(true)}>Start</button>
-              <button onClick={() => setRunning(false)}>Stop</button>
-              <button onClick={() => setTime(0)}>Reset</button>       
-            </div>
-          </div>
-        );
-      };
-
     // *start game after level selection
+
     const onGo = (level) => {
         if (!level) {
             setLevelSelectError('To Continue, please select a level')
             return
         }
         else {
+            setStartTime(Timestamp.now()) 
             setModalShow(false)
-        //console.log(level)
             setRemaining(props.allLevels[level])
             setCurrentLevel(level)
-            setRunning(true)
-        //console.log(props.allLevels[level])
         }
     }
     
+    //? country click opens flag selector
     const handleCountryClick = (country) => {
+      if(matchedArr.indexOf(country.target.id) !== -1) {
+        return
+      }
+      else {
         setShowFlagSelector(true)
         setClickedCountry([country.target.id, country.target])
         document.getElementById(country.target.id).style.fill='#0ABAB5'
-    } //country click opens flag selector
+      }
+        
+    } 
 
     const hideFlagSelector = () => {
         setShowFlagSelector(false)
         document.getElementById(clickedCountry[0]).style.fill=''
     }
 
-    const playRound = (flag, country)=> {
+    //? determine is user selection is correct/incorrect
+    const playRound = (flag, country)=> { 
         const userSelection = hashString(flag+country);
         if(solutions.indexOf(userSelection) !== -1) {  // * Correct user selection
-            //console.log('FOUND')
             document.getElementById(country).style.fill='green'
             setShowFlagSelector(false)
             const newRemaining = remaining.filter((item)=>item !== country)
             setRemaining(newRemaining)
+            setMatchedArr([...matchedArr,country])
             notifyCorrect();
-             if (matched === 6){ // * When all found
-                 console.log('You found ALL')
-                 gameWon()
-             }
+              if (matched === 6){ // * When all found   
+                  gameWon()
+              }
             setMatched(matched + 1)
         }
         else { // * Incorrect user selection
             notifyIncorrect()
             setSelError(selError + 1)
         }
-    }   //determine is user selection is correct/incorrect
+    }   
 
     
     const gameWon = () => { //^ TODO
-        setRunning(false)
+        const fTime = Timestamp.now()
+        const timeDiff = fTime.seconds-startTime.seconds
+        const diffToDisplay = new Date(timeDiff * 1000).toISOString().substring(14, 19)
+        setTimetoComplete(diffToDisplay);
+        setShowGameWon(true)
     }
-
-
+    
     return (
         
         <div>
@@ -179,6 +158,15 @@ const Play = (props) => {
                 onHide={() => setModalShow(false)}
                 error={levelSelectError}
             />
+
+            <GameWon
+                time={timeToComplete}
+                wonLevel={currentLevel}
+                userErrors={selError}
+                show={showGameWon}
+                onHide={() => setShowGameWon(false)}
+                
+            />
             
             <FlagSelector 
                 flagclick={playRound}
@@ -187,7 +175,6 @@ const Play = (props) => {
                 flags={remaining}
                 onHide={() => {hideFlagSelector()}}
             />
-            <Stopwatch></Stopwatch>
             <Map countryClick={handleCountryClick}></Map>
         </div>
     )

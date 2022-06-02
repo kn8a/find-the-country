@@ -9,9 +9,9 @@ import '../styles/app.css'
 
 import { initializeApp } from "firebase/app";
 import {
-  getFirestore, collection, onSnapshot,
-  addDoc, doc, 
-  query, where,
+  getFirestore, collection, onSnapshot, Firestore,
+  addDoc, doc, firebase,
+  query, where, Timestamp,
   orderBy, serverTimestamp,
   getDoc, updateDoc, DocumentSnapshot,
 } from 'firebase/firestore'
@@ -71,7 +71,7 @@ function App() {
           <Route index element={<Instructions />} />
           <Route path="/" element={<Instructions />} />
           <Route path="/instructions/" element={<Instructions />} />
-          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels}/>}/>
+          <Route path="/play/" exact element={<Play allLevels={gameLevels.levels} sols={gameLevels.sols}/>}/>
           <Route path="/scores/" exact element={<Scores/>}/>
         </Routes>
         <Footer/>
