@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+### Background
+Find-the-country is a 'Where's Waldo' style game, and instead of finding a character on a static image, you have to find countries based on given flags and match the countries to ther respective flags. The project is made with React JS.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src=https://user-images.githubusercontent.com/88045655/172295420-53bdab44-69cc-446d-b2ad-c814b584dcdf.JPG alt="To-do tasks" width="600">
 
-## Available Scripts
+Live demo: [https://kn8a.github.io/find-the-country/](https://kn8a.github.io/find-the-country/)
 
-In the project directory, you can run:
+### Project Requirments
 
-### `npm start`
+ - ✔️ Start with a large photograph which contains several elements the user is meant to find, e.g. Waldo, The Wizard, Wilma etc… name your own if you’d like to use your own photos. The user will make selections for each character and they will get feedback on whether they are correct or not.
+ - ✔️ When the user selects one of these characters, you should check with your Backend to see if that character is actually within the targeting box. Provide the user with appropriate feedback (e.g. if wrong, an error message). If correct, place a marker on the photo in the character’s location.
+ - ✔️ Keep track of how long it takes between when the photo is first loaded and when the user finally identifies all characters.
+ - ✔️ Once a round is complete, ask the user for his/her name and record that time. This will get a bit tricky since you’ll have anonymous users you need to keep track of.
+ - ⭐ Optional - Have multiple levels of difficulty.
+ - ⭐ Bonus - Keep track of user selection errors.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Resources used
+- Firebase - for storing game data, solutions and game scores
+- svg2jsx - to convert world map svg to jsx
+- react-bootstrap - UI library
+- react-hash-string - Library to hash solutions for comparison with DB
+- react-country-flag - Library to display country flags
+- react-toastify - Library to display toasts
+ 
+### Where I struggled
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Working with react-bootstrap, particularly with getting flags to display in the Navbar - documentation was a bit lacking.
+- Timing the game play - solved using `Timestamp.now()` 
+- Programatically navigating to `/scores/` route after score submit - solved using `useNavigate()`
 
-### `npm test`
+### What I Learned
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Greater understanding of useEffect
+- Using .env
+- Manipulating individual paths of svg
+- react-bootstrap; Navbar, Modal, Tabs, Table
+- Greater understanding of react-router and `useNavigate()`
