@@ -1,6 +1,5 @@
 import React from "react"
 import '../styles/map.css'
-import { useEffect, useState } from "react"
 
 const Map = (props) => {
 
