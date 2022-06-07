@@ -16,6 +16,7 @@ Live demo: [https://kn8a.github.io/find-the-country/](https://kn8a.github.io/fin
 
 ### Resources used
 - Firebase - for storing game data, solutions and game scores
+- svg world map - Guilherme de Souza Vieira, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
 - svg2jsx - to convert world map svg to jsx
 - react-bootstrap - UI library
 - react-hash-string - Library to hash solutions for comparison with DB
