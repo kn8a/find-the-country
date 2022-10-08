@@ -23,16 +23,9 @@ Live demo: [https://kn8a.github.io/find-the-country/](https://kn8a.github.io/fin
 - react-country-flag - Library to display country flags
 - react-toastify - Library to display toasts
  
-### Where I struggled
+## How to use:
 
-- Working with react-bootstrap, particularly with getting flags to display in the Navbar - documentation was a bit lacking.
-- Timing the game play - solved using `Timestamp.now()` 
-- Programatically navigating to `/scores/` route after score submit - solved using `useNavigate()`
-
-### What I Learned
-
-- Greater understanding of useEffect
-- Using .env
-- Manipulating individual paths of svg
-- react-bootstrap; Navbar, Modal, Tabs, Table
-- Greater understanding of react-router and `useNavigate()`
+1. Clone this repository.
+2.  Installation:  `npm install`
+3.  In the project directory, run:  `npm start`
+4. Open  [http://localhost:3000](http://localhost:3000/)  to view it in the browser. The page will reload if you make edits.
